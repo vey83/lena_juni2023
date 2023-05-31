@@ -15,7 +15,7 @@ for (i in 1:length(vorlagen_short)) {
 
   ###Resultate aus JSON auslesen für Gemeinden
   results <- get_results(json_data,i)
-  
+
 #Simulation Gemeinden
 #source("data_simulation_gemeinden.R")
   
@@ -59,6 +59,7 @@ for (i in 1:length(vorlagen_short)) {
   
   #Spezialfälle
   hist_check <- FALSE
+  hist_several_check <- FALSE
   other_check <- FALSE
   
   #Ausgezählte Gemeinden auswählen
@@ -70,7 +71,7 @@ for (i in 1:length(vorlagen_short)) {
     
     #Daten anpassen
     results <- augment_raw_data(results)
-    
+
     #Intros generieren
     results <- normal_intro(results)
     
@@ -105,9 +106,9 @@ for (i in 1:length(vorlagen_short)) {
     #Historischer Vergleich (falls vorhanden)
 
     #Check Vorlagen-ID
-    if (vorlagen$id[i] == "6590" || vorlagen$id[i] == "6600") { 
+    if (vorlagen$id[i] == "6630") { 
       hist_check <- TRUE 
-      data_hist <- format_data_hist(daten_altersvorsorge_bfs)
+      data_hist <- format_data_hist(daten_co2_bfs)
       results <- merge(results,data_hist,all.x = TRUE)
       if (other_check == FALSE) {
       results <- hist_storyfinder(results)
@@ -116,6 +117,24 @@ for (i in 1:length(vorlagen_short)) {
       }
     }
     
+    #Historischer Vergleich mit mehreren Vorlagen
+    if (vorlagen$id[i] == "6640") { 
+      hist_check <- TRUE
+      hist_several_check <- TRUE
+      data_hist_1 <- format_data_hist(daten_covid1_bfs)
+      data_hist_1 <- data_hist_1 %>%
+        select(Gemeinde_Nr,Hist_Ja_Stimmen_In_Prozent) %>%
+        rename(Hist1_Ja_Stimmen_In_Prozent = Hist_Ja_Stimmen_In_Prozent)
+      data_hist_2 <- format_data_hist(daten_covid2_bfs)
+      data_hist_2 <- data_hist_2 %>%
+        select(Gemeinde_Nr,Hist_Ja_Stimmen_In_Prozent) %>%
+        rename(Hist2_Ja_Stimmen_In_Prozent = Hist_Ja_Stimmen_In_Prozent)
+      results <- merge(results,data_hist_1,all.x = TRUE)
+      results <- merge(results,data_hist_2,all.x = TRUE)
+
+      results <- hist_storyfinder_several(results)
+    }
+
     #Vergleich innerhalb des Kantons (falls alle Daten vom Kanton vorhanden)
     
     #Check Vorlagen-ID

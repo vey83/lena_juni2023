@@ -16,9 +16,11 @@ source("functions_output.R", encoding = "UTF-8")
 timestamp_national <- read.csv("./Timestamp/timestamp_national.txt",header=FALSE)[1,1]
 timestamp_kantonal <- read.csv("./Timestamp/timestamp_kantonal.txt",header=FALSE)[1,1]
   
-time_check <- timestamp_national == json_data$timestamp & timestamp_kantonal == json_data_kantone$timestamp
+time_check_national <- timestamp_national == json_data$timestamp
+time_check_kantonal <- timestamp_kantonal == json_data_kantone$timestamp
+
 #time_check <- FALSE
-if (time_check == TRUE) {
+if ((time_check_national == TRUE) & (time_check_kantonal == TRUE)) {
 print("Keine neuen Daten gefunden")  
 } else {
 print("Neue Daten gefunden")
@@ -30,14 +32,24 @@ vorlagen_it <- get_vorlagen(json_data,"it")
 
 time_start <- Sys.time()
 
+if (time_check_national == FALSE) {
 ###Nationale Abstimmungen###
 source("nationale_abstimmungen.R", encoding="UTF-8")
-
+}
+  
+if (time_check_kantonal == FALSE) {  
 ###Kantonale Abstimmungen###
 source("kantonale_abstimmungen.R", encoding="UTF-8")
 
+###Kantonale Abstimmungen Uebersicht  
+source("kantonale_abstimmungen_uebersicht.R", encoding="UTF-8")
+
 ###Kantonale Abstimmungen Sonderfälle###
 #source("kantonale_abstimmungen_special.R", encoding="UTF-8")
+
+}
+  
+  
 
 ###Sonderanpassungen###
 

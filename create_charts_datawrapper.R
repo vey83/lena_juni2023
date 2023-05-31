@@ -1,8 +1,15 @@
 #Working Directory definieren
-setwd("C:/Users/simon/OneDrive/LENA_Project/lena_juni2023")
+setwd("C:/Users/sw/OneDrive/LENA_Project/20230618_LENA_Abstimmungen")
 
 ###Config: Bibliotheken laden, Pfade/Links definieren, bereits vorhandene Daten laden
 source("config.R",encoding = "UTF-8")
+
+###Funktionen laden
+source("functions_readin.R", encoding = "UTF-8")
+source("functions_storyfinder.R", encoding = "UTF-8")
+source("functions_storybuilder.R", encoding = "UTF-8")
+source("functions_output.R", encoding = "UTF-8")
+
 
 monate_de <- c("Januar", "Februar", "März", 
   "April", "Mai", "Juni", "July", 
@@ -35,7 +42,7 @@ vorlagen_all <- rbind(vorlagen_all,vorlagen_it)
 team_id <- "6Gn1afus"
 date_voting <- as.Date(json_data$abstimmtag,format="%Y%m%d")
 
-main_folder <- dw_create_folder(name=paste0("Abstimmung ",day(date_voting),". ",monate[month(date_voting)]," ",year(date_voting)),organization_id = team_id)
+main_folder <- dw_create_folder(name=paste0("Abstimmung ",day(date_voting),". ",monate_de[month(date_voting)]," ",year(date_voting)),organization_id = team_id)
 
 folder_eid <- dw_create_folder("Eidgenössische Abstimmungen",parent_id = main_folder$id)
 folder_kantonal <- dw_create_folder("Kantonale Abstimmungen",parent_id = main_folder$id)
@@ -48,6 +55,8 @@ folder_schweiz <- dw_create_folder("Schweiz",parent_id = folder_eid$id)
 
 folder_gemeindeebene <- dw_create_folder("Gemeindeebene",parent_id = folder_schweiz$id)
 folder_kantonsebene <- dw_create_folder("Kantonsebene",parent_id = folder_schweiz$id)
+
+folder_kantone_uebersicht <- dw_create_folder("Kantone Übersicht",parent_id = folder_kantone$id)
 
 folder_vorlagen <- dw_create_folder("Vorlagen",parent_id = folder_kantone$id)
 folder_vorlagen_de <- dw_create_folder("Deutsch",parent_id = folder_vorlagen$id)
@@ -85,7 +94,8 @@ grafiken_uebersicht <- rbind(grafiken_uebersicht,new_entry)
 
 #Schweizkarten erstellen, Gemeinde und Kantone
 for (v in 1:length(vorlagen_short)) {
-  title_select <- c(v,v+4,v+8)
+  title_select <- c(v,v+length(vorlagen_short),v+length(vorlagen_short)+length(vorlagen_short))
+
   #Alle drei Sprachen
   for (i in 1:3) {
   #Gemeinden  
@@ -98,7 +108,7 @@ for (v in 1:length(vorlagen_short)) {
                                                  "/master/Output/",vorlagen_short[v],"_dw.csv")))
   dw_publish_chart(data_chart$id)
   metadata_chart <- dw_retrieve_chart_metadata(data_chart$id)
-  
+
   new_entry <- data.frame("Schweizer Gemeinden",
                           vorlagen_short[v],
                           metadata_chart$content$title,
@@ -132,8 +142,16 @@ for (v in 1:length(vorlagen_short)) {
   }
 }  
 
+#Daten Speichern
+grafiken_uebersicht <- grafiken_uebersicht[-1,]
+library(xlsx)
+write.xlsx(grafiken_uebersicht,"./Data/metadaten_grafiken.xlsx",row.names = FALSE)
 
 ###Kantonale Abstimmungen
+grafiken_uebersicht <- data.frame("Typ","Vorlage","Titel","Sprache","ID","Link","Iframe")
+colnames(grafiken_uebersicht) <- c("Typ","Vorlage","Titel","Sprache","ID","Link","Iframe")
+
+
 #Sprache definieren
 kantonal_sprachen <- c(1,1,2,2,2)
 
@@ -165,9 +183,57 @@ for (k in 1:length(kantonal_short)) {
   grafiken_uebersicht <- rbind(grafiken_uebersicht,new_entry)
 }
 
+###Overviews Kantone
+kantone_list <- json_data_kantone[["kantone"]]
+
+for (k in 1:nrow(kantone_list)) {
+
+  vorlagen <- kantone_list$vorlagen[[k]]
+ 
+for (i in 1:nrow(vorlagen)) {
+
+vorlage_titel <- vorlagen$vorlagenTitel[[i]]
+vorlage_titel <- vorlage_titel %>%
+    filter(nchar(text) > 5)
+
+for (v in 1:nrow(vorlage_titel)) {
+  if (vorlage_titel$langKey[v] == "de") {
+  titel <- paste0(kantone_list$geoLevelname[k],": Kantonale Abstimmungen vom ",day(date_voting),". ",monate_de[month(date_voting)]," ",year(date_voting))
+  l <- 1
+  }
+  if (vorlage_titel$langKey[v] == "fr") {
+  titel <- paste0(kantone_list$geoLevelname[k],": Votations cantonales du ",day(date_voting),". ",monate_de[month(date_voting)]," ",year(date_voting))
+  l <- 2
+  }
+  if (vorlage_titel$langKey[v] == "it") {
+  titel <- paste0(kantone_list$geoLevelname[k],": Voti cantonali da ",day(date_voting),". ",monate_de[month(date_voting)]," ",year(date_voting))
+  l <- 3
+  }
+
+  data_chart <- dw_copy_chart(vorlagen_uebersicht[l])
+  dw_edit_chart(data_chart$id,
+                title=titel,
+                folderId = folder_kantone_uebersicht$id)
+  dw_publish_chart(data_chart$id)
+  metadata_chart <- dw_retrieve_chart_metadata(data_chart$id)
+  
+  new_entry <- data.frame("Uebersicht Kanton",
+                          kantone_list$geoLevelname[k],
+                          metadata_chart$content$title,
+                          metadata_chart$content$language,
+                          metadata_chart$id,
+                          metadata_chart$content$publicUrl,
+                          metadata_chart$content$metadata$publish$`embed-codes`$`embed-method-responsive`)
+  colnames(new_entry) <- c("Typ","Vorlage","Titel","Sprache","ID","Link","Iframe")
+  grafiken_uebersicht <- rbind(grafiken_uebersicht,new_entry)
+}  
+}
+}  
+
 #Daten Speichern
+grafiken_uebersicht <- grafiken_uebersicht[-1,]
 library(xlsx)
-write.xlsx(grafiken_uebersicht,"./Data/metadaten_grafiken.xlsx",row.names = FALSE)
+write.xlsx(grafiken_uebersicht,"./Data/metadaten_grafiken_kantonal.xlsx",row.names = FALSE)
 
 #Vorlagen für Erstellung der Kantone
 for (v in 1:length(vorlagen_short)) {

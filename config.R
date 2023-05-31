@@ -22,7 +22,8 @@ abstimmung_date <- "Juni2023"
 link_json <- "https://app-prod-static-voteinfo.s3.eu-central-1.amazonaws.com/v1/ogd/sd-t-17-02-20230618-eidgAbstimmung.json" 
 json_data <- fromJSON(link_json, flatten = TRUE)
 
-link_json_kantone <- "https://app-prod-static-voteinfo.s3.eu-central-1.amazonaws.com/v1/ogd/sd-t-17-02-20230618-kantAbstimmung.json"
+link_json_kantone <- "https://app-prod-static-voteinfo.s3.eu-central-1.amazonaws.com/v1/ogd/sd-t-17-02-20221127-kantAbstimmung.json"
+#link_json_kantone <- "https://app-prod-static-voteinfo.s3.eu-central-1.amazonaws.com/v1/ogd/sd-t-17-02-20230618-kantAbstimmung.json"
 json_data_kantone <- fromJSON(link_json_kantone, flatten = TRUE)
 
 cat("Aktuelle Abstimmungsdaten geladen\n")
@@ -52,9 +53,11 @@ kantonal_add <- c(1,1,2)
 other_check <- FALSE
 
 ###Vorhandene Daten laden
-#daten_altersvorsorge_bfs <- read_excel("Data/daten_altersvorsorge_bfs.xlsx")
+daten_co2_bfs <- read_excel("Data/daten_co2_bfs.xlsx",skip=5)
+daten_covid1_bfs <- read_excel("Data/daten_covid1_bfs.xlsx",skip=5)
+daten_covid2_bfs <- read_excel("Data/daten_covid2_bfs.xlsx",skip=5)
 
-#cat("Daten zu historischen Abstimmungen geladen\n")
+cat("Daten zu historischen Abstimmungen geladen\n")
 
 #Metadaten Gemeinden und Kantone
 meta_gmd_kt <- read_csv("Data/MASTERFILE_GDE.csv")

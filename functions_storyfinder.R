@@ -133,6 +133,74 @@ hist_storyfinder <- function(dta) {
   
 }
 
+hist_storyfinder_several <- function(dta) {
+  
+  selection <- is.na(dta$Hist1_Ja_Stimmen_In_Prozent) == FALSE &
+    is.na(dta$Hist2_Ja_Stimmen_In_Prozent) == FALSE &
+    dta$Ja_Stimmen_In_Prozent > 50 &
+    dta$Hist1_Ja_Stimmen_In_Prozent > 50 &
+    dta$Hist2_Ja_Stimmen_In_Prozent > 50
+  dta <- storyboard_modifier(dta, selection, "HistoricPhrase_Ja_Ja_Ja", mode = "append")
+  
+  selection <- is.na(dta$Hist1_Ja_Stimmen_In_Prozent) == FALSE &
+    is.na(dta$Hist2_Ja_Stimmen_In_Prozent) == FALSE &
+    dta$Ja_Stimmen_In_Prozent > 50 &
+    dta$Hist1_Ja_Stimmen_In_Prozent > 50 &
+    dta$Hist2_Ja_Stimmen_In_Prozent < 50
+  dta <- storyboard_modifier(dta, selection, "HistoricPhrase_Ja_Nein_Ja", mode = "append")
+  
+  selection <- is.na(dta$Hist1_Ja_Stimmen_In_Prozent) == FALSE &
+    is.na(dta$Hist2_Ja_Stimmen_In_Prozent) == FALSE &
+    dta$Ja_Stimmen_In_Prozent > 50 &
+    dta$Hist1_Ja_Stimmen_In_Prozent < 50 &
+    dta$Hist2_Ja_Stimmen_In_Prozent > 50
+  dta <- storyboard_modifier(dta, selection, "HistoricPhrase_Ja_Ja_Nein", mode = "append")
+  
+  selection <- is.na(dta$Hist1_Ja_Stimmen_In_Prozent) == FALSE &
+    is.na(dta$Hist2_Ja_Stimmen_In_Prozent) == FALSE &
+    dta$Ja_Stimmen_In_Prozent > 50 &
+    dta$Hist1_Ja_Stimmen_In_Prozent < 50 &
+    dta$Hist2_Ja_Stimmen_In_Prozent < 50
+  dta <- storyboard_modifier(dta, selection, "HistoricPhrase_Ja_Nein_Nein", mode = "append")
+  
+  selection <- is.na(dta$Hist1_Ja_Stimmen_In_Prozent) == FALSE &
+    is.na(dta$Hist2_Ja_Stimmen_In_Prozent) == FALSE &
+    dta$Ja_Stimmen_In_Prozent < 50 &
+    dta$Hist1_Ja_Stimmen_In_Prozent < 50 &
+    dta$Hist2_Ja_Stimmen_In_Prozent < 50
+  dta <- storyboard_modifier(dta, selection, "HistoricPhrase_Nein_Nein_Nein", mode = "append")
+  
+  selection <- is.na(dta$Hist1_Ja_Stimmen_In_Prozent) == FALSE &
+    is.na(dta$Hist2_Ja_Stimmen_In_Prozent) == FALSE &
+    dta$Ja_Stimmen_In_Prozent < 50 &
+    dta$Hist1_Ja_Stimmen_In_Prozent > 50 &
+    dta$Hist2_Ja_Stimmen_In_Prozent < 50
+  dta <- storyboard_modifier(dta, selection, "HistoricPhrase_Nein_Nein_Ja", mode = "append")
+  
+  selection <- is.na(dta$Hist1_Ja_Stimmen_In_Prozent) == FALSE &
+    is.na(dta$Hist2_Ja_Stimmen_In_Prozent) == FALSE &
+    dta$Ja_Stimmen_In_Prozent < 50 &
+    dta$Hist1_Ja_Stimmen_In_Prozent < 50 &
+    dta$Hist2_Ja_Stimmen_In_Prozent > 50
+  dta <- storyboard_modifier(dta, selection, "HistoricPhrase_Nein_Ja_Nein", mode = "append")
+  
+  selection <- is.na(dta$Hist1_Ja_Stimmen_In_Prozent) == FALSE &
+    is.na(dta$Hist2_Ja_Stimmen_In_Prozent) == FALSE &
+    dta$Ja_Stimmen_In_Prozent < 50 &
+    dta$Hist1_Ja_Stimmen_In_Prozent > 50 &
+    dta$Hist2_Ja_Stimmen_In_Prozent > 50
+  dta <- storyboard_modifier(dta, selection, "HistoricPhrase_Nein_Ja_Ja", mode = "append")
+  
+  selection <- is.na(dta$Hist1_Ja_Stimmen_In_Prozent) == TRUE ||
+    is.na(dta$Hist2_Ja_Stimmen_In_Prozent) == TRUE
+  dta <- storyboard_modifier(dta, selection, "HistoricPhrase_NichtMöglich", mode = "append")
+  
+  return(dta)
+  
+}
+
+
+
 hist_storyfinder_special <- function(dta) {
   
   selection <- is.na(dta$Hist_Ja_Stimmen_In_Prozent) == FALSE &
@@ -197,6 +265,8 @@ hist_storyfinder_special <- function(dta) {
   return(dta)
   
 }
+
+
 
 other_storyfinder <- function(dta) {
   
