@@ -64,5 +64,4 @@ write.csv(data_overview,paste0("Output/Uebersicht_dw_",kantone_list$geoLevelname
 dw_data_to_chart(data_overview,datawrapper_codes[1,5])
 dw_edit_chart(datawrapper_codes[1,5],intro=paste0("Letzte Aktualisierung: ",format(Sys.time(),"%H:%M Uhr")))
 dw_publish_chart(datawrapper_codes[1,5])
-
 }  
