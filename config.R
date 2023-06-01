@@ -52,6 +52,10 @@ kantonal_add <- c(1,1,2)
 #Spezialfälle
 other_check <- FALSE
 
+#Kantonale Vorlagen Titel
+Kantonale_Vorlagen_Titel <- as.data.frame(read_excel(paste0("Data/Textbausteine_LENA_",abstimmung_date,".xlsx"), 
+                                          sheet = "Kantonale_Abstimmungen_Overview"))
+
 ###Vorhandene Daten laden
 daten_co2_bfs <- read_excel("Data/daten_co2_bfs.xlsx",skip=5)
 daten_covid1_bfs <- read_excel("Data/daten_covid1_bfs.xlsx",skip=5)

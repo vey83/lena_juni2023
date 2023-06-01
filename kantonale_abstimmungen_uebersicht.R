@@ -6,7 +6,7 @@ colnames(data_overview) <- c("Ja","Nein","Abstimmung_de","Abstimmung_fr","Abstim
 for (k in 1:nrow(kantone_list)) {
 
 vorlagen <- kantone_list$vorlagen[[k]]
-  
+
 for (i in 1:nrow(vorlagen)) {
  
 results <- get_results_kantonal(json_data_kantone,
@@ -20,14 +20,19 @@ Ja_Stimmen_Kanton <- get_results_kantonal(json_data_kantone,
                                           i,
                                           "kantonal")
 
+#Titel aus Spreadsheet
+titel_all <- Kantonale_Vorlagen_Titel %>%
+  filter(Kanton == kantone_list$geoLevelname[k],
+         Vorlage_ID == vorlagen$vorlagenId[i])
+
 #Eintrag für Uebersicht
-uebersicht_text_de <- paste0("<b>",vorlagen$vorlagenTitel[[i]]$text[1],"</b><br>",
+uebersicht_text_de <- paste0("<b>",titel_all$Vorlage_d[1],"</b><br>",
                              "Es sind noch keine Gemeinden ausgezählt.")
 
-uebersicht_text_fr <- paste0("<b>",vorlagen$vorlagenTitel[[i]]$text[2],"</b><br>",
+uebersicht_text_fr <- paste0("<b>",titel_all$Vorlage_f[1],"</b><br>",
                              "Aucun résultat n'est encore connu.")
 
-uebersicht_text_it <- paste0("<b>",vorlagen$vorlagenTitel[[i]]$text[3],"</b><br>",
+uebersicht_text_it <- paste0("<b>",titel_all$Vorlage_i[1],"</b><br>",
                              "Nessun risultato è ancora noto.")
 Ja_Anteil <- 50
 Nein_Anteil <- 50
