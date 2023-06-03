@@ -153,11 +153,11 @@ colnames(grafiken_uebersicht) <- c("Typ","Vorlage","Titel","Sprache","ID","Link"
 
 
 #Sprache definieren
-kantonal_sprachen <- c(1,1,2,2,2)
+kantonal_sprachen <- c(1,1,1,1,1,1,3,2,2,2,2,2,2,2,2,2)
 
 for (k in 1:length(kantonal_short)) {
   data_chart <- dw_copy_chart(vorlagen_gemeinden[kantonal_sprachen[k]])
-  created_folder <- dw_create_folder(kantonal_short[k],parent_id = folder_kantonal$id)
+  created_folder <- dw_create_folder(kantonal_short[k],parent_id = "166825") #folder_kantonal$id
   titel <- json_data_kantone[["kantone"]][["vorlagen"]][[kantonal_number[k]]][["vorlagenTitel"]][[kantonal_add[k]]][["text"]][kantonal_sprachen[k]]
   dw_edit_chart(data_chart$id,
                 title=titel,
@@ -190,9 +190,9 @@ for (k in 1:nrow(kantone_list)) {
 
   vorlagen <- kantone_list$vorlagen[[k]]
  
-for (i in 1:nrow(vorlagen)) {
+#for (i in 1:nrow(vorlagen)) {
 
-vorlage_titel <- vorlagen$vorlagenTitel[[i]]
+vorlage_titel <- vorlagen$vorlagenTitel[[1]]
 vorlage_titel <- vorlage_titel %>%
     filter(nchar(text) > 5)
 
@@ -213,7 +213,7 @@ for (v in 1:nrow(vorlage_titel)) {
   data_chart <- dw_copy_chart(vorlagen_uebersicht[l])
   dw_edit_chart(data_chart$id,
                 title=titel,
-                folderId = folder_kantone_uebersicht$id)
+                folderId = "166833") #folder_kantone_uebersicht$id
   dw_publish_chart(data_chart$id)
   metadata_chart <- dw_retrieve_chart_metadata(data_chart$id)
   
@@ -228,12 +228,12 @@ for (v in 1:nrow(vorlage_titel)) {
   grafiken_uebersicht <- rbind(grafiken_uebersicht,new_entry)
 }  
 }
-}  
+#}  
 
 #Daten Speichern
 grafiken_uebersicht <- grafiken_uebersicht[-1,]
 library(xlsx)
-write.xlsx(grafiken_uebersicht,"./Data/metadaten_grafiken_kantonal.xlsx",row.names = FALSE)
+write.xlsx(grafiken_uebersicht,"./Data/metadaten_grafiken_kantonal_new.xlsx",row.names = FALSE)
 
 #Vorlagen für Erstellung der Kantone
 for (v in 1:length(vorlagen_short)) {

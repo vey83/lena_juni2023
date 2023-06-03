@@ -22,8 +22,8 @@ abstimmung_date <- "Juni2023"
 link_json <- "https://app-prod-static-voteinfo.s3.eu-central-1.amazonaws.com/v1/ogd/sd-t-17-02-20230618-eidgAbstimmung.json" 
 json_data <- fromJSON(link_json, flatten = TRUE)
 
-link_json_kantone <- "https://app-prod-static-voteinfo.s3.eu-central-1.amazonaws.com/v1/ogd/sd-t-17-02-20221127-kantAbstimmung.json"
-#link_json_kantone <- "https://app-prod-static-voteinfo.s3.eu-central-1.amazonaws.com/v1/ogd/sd-t-17-02-20230618-kantAbstimmung.json"
+#link_json_kantone <- "https://app-prod-static-voteinfo.s3.eu-central-1.amazonaws.com/v1/ogd/sd-t-17-02-20221127-kantAbstimmung.json"
+link_json_kantone <- "https://app-prod-static-voteinfo.s3.eu-central-1.amazonaws.com/v1/ogd/sd-t-17-02-20230618-kantAbstimmung.json"
 json_data_kantone <- fromJSON(link_json_kantone, flatten = TRUE)
 
 cat("Aktuelle Abstimmungsdaten geladen\n")
@@ -32,13 +32,14 @@ cat("Aktuelle Abstimmungsdaten geladen\n")
 vorlagen_short <- c("OECD_Mindeststeuer","Klima_Gesetz","Covid_Gesetz")
 
 ###Kurznamen und Nummern kantonale Vorlagen
-kantonal_short <- c("SZ_Regierungsratslöhne","VS_Familienzulagen","VS_Suizid")
+kantonal_short <- c("BE_Elternzeit","BE_Schuldenbremse","AG_Klimaschutz","AG_Taktfahrplan","SO_Zwilingsinitiative1","SO_Zwilingsinitiative2","TI_Oeffnungszeiten",
+                    "JU_Autorites","FR_MHNF","VD_Climat","GE_Conge_Parental","GE_Solidarite","GE_Protect_Numerique","GE_Alimentation","GE_LEFI","GE_Emplois")
 
 #Nummer in JSON 
-kantonal_number <- c(2,8,8) 
+kantonal_number <- c(2,2,8,8,5,5,10,13,4,11,12,12,12,12,12,12) 
 
 #Falls mehrere Vorlagen innerhalb eines Kantons, Vorlage auswaehlen
-kantonal_add <- c(1,1,2)
+kantonal_add <- c(2,1,3,2,2,3,1,1,1,1,2,3,4,5,6,1)
 
 ###Kurznamen und Nummern kantonale Vorlagen Spezialfaelle
 #kantonal_short_special <- c("ZH_Krankenkassen","BS_Klimagerechtigkeit")

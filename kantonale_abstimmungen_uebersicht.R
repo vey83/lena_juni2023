@@ -1,10 +1,9 @@
 kantone_list <- json_data_kantone[["kantone"]]
 
-data_overview <- data.frame(50,50,"Abstimmung_de","Abstimmung_fr","Abstimmung_it")
-colnames(data_overview) <- c("Ja","Nein","Abstimmung_de","Abstimmung_fr","Abstimmung_it")
-
 for (k in 1:nrow(kantone_list)) {
-
+  
+data_overview <- data.frame(50,50,"Abstimmung_de","Abstimmung_fr","Abstimmung_it")
+colnames(data_overview) <- c("Ja","Nein","Abstimmung_de","Abstimmung_fr","Abstimmung_it")  
 vorlagen <- kantone_list$vorlagen[[k]]
 
 for (i in 1:nrow(vorlagen)) {
@@ -66,7 +65,27 @@ data_overview <- data_overview[-1,]
 write.csv(data_overview,paste0("Output/Uebersicht_dw_",kantone_list$geoLevelname[k],".csv"), na = "", row.names = FALSE, fileEncoding = "UTF-8")
 
 #Update Datawrapper-Chart
-dw_data_to_chart(data_overview,datawrapper_codes[1,5])
-dw_edit_chart(datawrapper_codes[1,5],intro=paste0("Letzte Aktualisierung: ",format(Sys.time(),"%H:%M Uhr")))
-dw_publish_chart(datawrapper_codes[1,5])
+datawrapper_ids <- datawrapper_codes_kantonal %>%
+  filter(Typ == "Uebersicht Kanton",
+         Vorlage == kantone_list$geoLevelname[k])
+
+
+for (d in 1:nrow(datawrapper_ids)) {
+dw_data_to_chart(data_overview,datawrapper_ids$ID[d])
+
+if (datawrapper_ids$Sprache[d] == "de-DE") {
+dw_edit_chart(datawrapper_ids$ID[d],intro=paste0("Letzte Aktualisierung: ",format(Sys.time(),"%H:%M Uhr")))
+}
+if (datawrapper_ids$Sprache[d] == "fr-CH") {
+    dw_edit_chart(datawrapper_ids$ID[d],intro=paste0("Dernière mise à jour: ",format(Sys.time(),"%Hh%M")))
+}
+
+if (datawrapper_ids$Sprache[d] == "it-CH") {
+    dw_edit_chart(datawrapper_ids$ID[d],intro=paste0("Ultimo aggiornamento: ",format(Sys.time(),"%H:%M")))
+}    
+  
+dw_publish_chart(datawrapper_ids$ID[d])
+
+}
+
 }  
