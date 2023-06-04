@@ -146,8 +146,11 @@ for (k in 1:length(kantonal_short) ) {
       if (datawrapper_codes_vorlage$Sprache[r] == "de-DE") {
         dw_edit_chart(datawrapper_codes_vorlage[r,5],intro=undertitel_de,annotate=paste0("Letzte Aktualisierung: ",format(Sys.time(),"%d.%m.%Y %H:%M Uhr")))
         dw_publish_chart(datawrapper_codes_vorlage[r,5])
-      } else {
+      } else if (datawrapper_codes_vorlage$Sprache[r] == "ch-FR") {
         dw_edit_chart(datawrapper_codes_vorlage[r,5],intro=undertitel_fr,annotate=paste0("dernière mise à jour: ",format(Sys.time(),"%d.%m.%Y %Hh%M")))
+        dw_publish_chart(datawrapper_codes_vorlage[r,5])
+      } else if (datawrapper_codes_vorlage$Sprache[r] == "ch-IT") {
+        dw_edit_chart(datawrapper_codes_vorlage[r,5],intro=undertitel_fr,annotate=paste0("Ultimo aggiornamento: ",format(Sys.time(),"%H:%M")))
         dw_publish_chart(datawrapper_codes_vorlage[r,5])
       }
     }

@@ -38,20 +38,36 @@ Nein_Anteil <- 50
 
 if (sum(results$Gebiet_Ausgezaehlt) > 0 ) {  
   
-  uebersicht_text_de <- paste0("<b>",vorlagen$vorlagenTitel[[i]]$text[1],"</b><br>",
+  uebersicht_text_de <- paste0("<b>",titel_all$Vorlage_d[1],"</b><br>",
                                sum(results$Gebiet_Ausgezaehlt)," von ",nrow(results)," Gemeinden ausgezählt (",
                                round((sum(results$Gebiet_Ausgezaehlt)*100)/nrow(results),1),
                                "%)")
   
-  uebersicht_text_fr <- paste0("<b>",vorlagen$vorlagenTitel[[i]]$text[2],"</b><br>",
+  uebersicht_text_fr <- paste0("<b>",titel_all$Vorlage_f[1],"</b><br>",
                                sum(results$Gebiet_Ausgezaehlt)," des ",nrow(results)," communes sont connus (",
                                round((sum(results$Gebiet_Ausgezaehlt)*100)/nrow(results),1),
                                "%)")
   
-  uebersicht_text_it <- paste0("<b>",vorlagen$vorlagenTitel[[i]]$text[3],"</b><br>",
+  uebersicht_text_it <- paste0("<b>",titel_all$Vorlage_i[1],"</b><br>",
                                sum(results$Gebiet_Ausgezaehlt)," dei ",nrow(results)," comuni sono noti (",
                                round((sum(results$Gebiet_Ausgezaehlt)*100)/nrow(results),1),
                                "%)")
+  
+  if (sum(results$Gebiet_Ausgewaehlt) == nrow(results)) {
+    uebersicht_text_de <- paste0("<b>",titel_all$Vorlage_d[1],"</b><br>",
+                                 "Es sind alle Gemeinden ausgezählt.")
+    
+    uebersicht_text_fr <- paste0("<b>",titel_all$Vorlage_f[1],"</b><br>",
+                                 "Toutes les communes sont connus.")
+    
+    uebersicht_text_it <- paste0("<b>",titel_all$Vorlage_i[1],"</b><br>",
+                                 "Tutti i comuni sono noti.")
+    
+    print(paste0("Resultate von folgender kantonalen Abstimmung aus ",kantone_list$geoLevelname[k]," sind komplett: ",
+                 titel_all$Vorlage_d[1],
+                 titel_all$Vorlage_f[1],
+                 titel_all$Vorlage_i[1]))
+  }  
   
   Ja_Anteil <- round(Ja_Stimmen_Kanton,1)
   Nein_Anteil <- round(100-Ja_Stimmen_Kanton,1)
@@ -77,11 +93,11 @@ if (datawrapper_ids$Sprache[d] == "de-DE") {
 dw_edit_chart(datawrapper_ids$ID[d],intro=paste0("Letzte Aktualisierung: ",format(Sys.time(),"%H:%M Uhr")))
 }
 if (datawrapper_ids$Sprache[d] == "fr-CH") {
-    dw_edit_chart(datawrapper_ids$ID[d],intro=paste0("Dernière mise à jour: ",format(Sys.time(),"%Hh%M")))
+dw_edit_chart(datawrapper_ids$ID[d],intro=paste0("Dernière mise à jour: ",format(Sys.time(),"%Hh%M")))
 }
 
 if (datawrapper_ids$Sprache[d] == "it-CH") {
-    dw_edit_chart(datawrapper_ids$ID[d],intro=paste0("Ultimo aggiornamento: ",format(Sys.time(),"%H:%M")))
+dw_edit_chart(datawrapper_ids$ID[d],intro=paste0("Ultimo aggiornamento: ",format(Sys.time(),"%H:%M")))
 }    
   
 dw_publish_chart(datawrapper_ids$ID[d])
