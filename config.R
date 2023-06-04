@@ -32,7 +32,7 @@ cat("Aktuelle Abstimmungsdaten geladen\n")
 vorlagen_short <- c("OECD_Mindeststeuer","Klima_Gesetz","Covid_Gesetz")
 
 ###Kurznamen und Nummern kantonale Vorlagen
-kantonal_short <- c("BE_Elternzeit","BE_Schuldenbremse","AG_Klimaschutz","AG_Taktfahrplan","SO_Zwilingsinitiative1","SO_Zwilingsinitiative2","TI_Oeffnungszeiten",
+kantonal_short <- c("BE_Elternzeit","BE_Schuldenbremse","AG_Klimaschutz","AG_Taktfahrplan","SO_Zwillingsinitiative 1","SO_Zwillingsinitiative 2","TI_Oeffnungszeiten",
                     "JU_Autorites","FR_MHNF","VD_Climat","GE_Conge_Parental","GE_Solidarite","GE_Protect_Numerique","GE_Alimentation","GE_LEFI","GE_Emplois")
 
 #Nummer in JSON 

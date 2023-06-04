@@ -1,5 +1,5 @@
 for (k in 1:length(kantonal_short) ) {
-#i <- k
+i <- k
   cat(paste0("\nErmittle Daten für folgende Vorlage: ",kantonal_short[k],"\n"))
   
   results <- get_results_kantonal(json_data_kantone,
@@ -8,7 +8,7 @@ for (k in 1:length(kantonal_short) ) {
   
 
 #Simulation Gemeinden
-#source("data_simulation_gemeinden.R")
+source("data_simulation_gemeinden.R")
   
   #Daten anpassen Gemeinden
   results <- treat_gemeinden(results)
@@ -21,7 +21,7 @@ for (k in 1:length(kantonal_short) ) {
                                             "kantonal")
   
   results$Ja_Stimmen_In_Prozent_Kanton <- Ja_Stimmen_Kanton
-#results$Ja_Stimmen_In_Prozent_Kanton <- 55  #Ja_Stimmen_Kanton Simulation
+results$Ja_Stimmen_In_Prozent_Kanton <- 55  #Ja_Stimmen_Kanton Simulation
   
   #Wie viele Gemeinden sind ausgezählt?
   cat(paste0(sum(results$Gebiet_Ausgezaehlt)," Gemeinden sind ausgezählt.\n"))
@@ -42,7 +42,10 @@ for (k in 1:length(kantonal_short) ) {
            Text_f = "Les résultats ne sont pas encore connus dans cette commune.",
            Text_i = "I resultati di questa comune non sono ancora noti.")
   
+  #Spezialfälle
   hist_check <- FALSE
+  hist_several_check <- FALSE
+  other_check <- FALSE
   
   #Ausgezählte Gemeinden auswählen
   results_notavailable <- results[results$Gebiet_Ausgezaehlt == FALSE,]
@@ -73,7 +76,7 @@ for (k in 1:length(kantonal_short) ) {
                                               sheet = kantonal_short[k]))
 
     cat("Textvorlagen geladen\n\n")
-    
+
     #Texte einfügen
     results <- build_texts(results)
     
@@ -146,10 +149,10 @@ for (k in 1:length(kantonal_short) ) {
       if (datawrapper_codes_vorlage$Sprache[r] == "de-DE") {
         dw_edit_chart(datawrapper_codes_vorlage[r,5],intro=undertitel_de,annotate=paste0("Letzte Aktualisierung: ",format(Sys.time(),"%d.%m.%Y %H:%M Uhr")))
         dw_publish_chart(datawrapper_codes_vorlage[r,5])
-      } else if (datawrapper_codes_vorlage$Sprache[r] == "ch-FR") {
+      } else if (datawrapper_codes_vorlage$Sprache[r] == "fr-CH") {
         dw_edit_chart(datawrapper_codes_vorlage[r,5],intro=undertitel_fr,annotate=paste0("dernière mise à jour: ",format(Sys.time(),"%d.%m.%Y %Hh%M")))
         dw_publish_chart(datawrapper_codes_vorlage[r,5])
-      } else if (datawrapper_codes_vorlage$Sprache[r] == "ch-IT") {
+      } else if (datawrapper_codes_vorlage$Sprache[r] == "it-CH") {
         dw_edit_chart(datawrapper_codes_vorlage[r,5],intro=undertitel_fr,annotate=paste0("Ultimo aggiornamento: ",format(Sys.time(),"%H:%M")))
         dw_publish_chart(datawrapper_codes_vorlage[r,5])
       }
