@@ -6,7 +6,6 @@ i <- k
                                   kantonal_number[k],
                                   kantonal_add[k])
   
-
 #Simulation Gemeinden
 source("data_simulation_gemeinden.R")
   
@@ -153,7 +152,7 @@ results$Ja_Stimmen_In_Prozent_Kanton <- 55  #Ja_Stimmen_Kanton Simulation
         dw_edit_chart(datawrapper_codes_vorlage[r,5],intro=undertitel_fr,annotate=paste0("dernière mise à jour: ",format(Sys.time(),"%d.%m.%Y %Hh%M")))
         dw_publish_chart(datawrapper_codes_vorlage[r,5])
       } else if (datawrapper_codes_vorlage$Sprache[r] == "it-CH") {
-        dw_edit_chart(datawrapper_codes_vorlage[r,5],intro=undertitel_fr,annotate=paste0("Ultimo aggiornamento: ",format(Sys.time(),"%H:%M")))
+        dw_edit_chart(datawrapper_codes_vorlage[r,5],intro=undertitel_it,annotate=paste0("Ultimo aggiornamento: ",format(Sys.time(),"%H:%M")))
         dw_publish_chart(datawrapper_codes_vorlage[r,5])
       }
     }
