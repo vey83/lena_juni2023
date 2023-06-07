@@ -138,14 +138,13 @@ source("data_simulation_kantone.R")
     #Vergleich innerhalb des Kantons (falls alle Daten vom Kanton vorhanden)
     
     #Check Vorlagen-ID
-    if (vorlagen$id[i] == "6580" || vorlagen$id[i] == "6610") {
+    if (vorlagen$id[i] == "6620") {
       
       #Falls mindestens ein Kanton ausgezählt -> Stories für die Kantone finden
       if (length(unique(results_notavailable$Kantons_Nr)) < 26) {
         results <- kanton_storyfinder(results)
       }
     }
-    
 
     ###Storybuilder
     
