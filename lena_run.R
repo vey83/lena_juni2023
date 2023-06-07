@@ -63,14 +63,17 @@ gitcommit()
 gitpush()
 
 #Tabellen aktualisieren
-#source("topflop.R", encoding = "UTF-8")
+source("./top_flop/top_flop_chartbuilder_de-2144680.R", encoding = "UTF-8")
+source("./top_flop/top_flop_chartbuilder_fr-2144681.R", encoding = "UTF-8")
+source("./top_flop/top_flop_chartbuilder_it-2144682.R", encoding = "UTF-8")
+
 
 #Make Commit
-#token <- read.csv("C:/Users/simon/OneDrive/Github_Token/token.txt",header=FALSE)[1,1]
-#git2r::cred_token(token)
-#gitadd()
-#gitcommit()
-#gitpush()
+token <- read.csv("C:/Users/sw/OneDrive/Github_Token/token.txt",header=FALSE)[1,1]
+git2r::cred_token(token)
+gitadd()
+gitcommit()
+gitpush()
 
 cat("Daten erfolgreich auf Github hochgeladen\n")
 

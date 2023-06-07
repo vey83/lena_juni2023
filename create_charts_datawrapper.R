@@ -252,7 +252,7 @@ for (v in 1:length(vorlagen_short)) {
 
     data_chart <- dw_copy_chart(vorlagen_gemeinden[2])
     dw_edit_chart(data_chart$id,
-                  title=vorlagen_all$text[v+4],
+                  title=vorlagen_all$text[v+length(vorlagen_short)],
                   intro = "&nbsp;",
                   annotate = "&nbsp;",
                   folderId = folder_vorlagen_fr$id,
