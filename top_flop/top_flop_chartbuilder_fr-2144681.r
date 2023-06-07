@@ -13,7 +13,7 @@ covid_flop_fr <- top_flop(covid,"flop","fr")
 
 #OCDE TOP
 chart_metadata <- dw_retrieve_chart_metadata("Rm3OV")
-intro_text_fr <- chart_metadata$content$metadata$describe$intro
+intro_text_fr <- gsub("[.].*","",chart_metadata$content$metadata$describe$intro)
 
 chart_ID <- "w5mAf"
 
@@ -44,7 +44,7 @@ dw_publish_chart(chart_ID)
 #Climat
 #TOP 
 chart_metadata <- dw_retrieve_chart_metadata("Px2XF")
-intro_text_fr <- chart_metadata$content$metadata$describe$intro
+intro_text_fr <- gsub("[.].*","",chart_metadata$content$metadata$describe$intro)
 
 chart_ID <- "kT6nB"
 
@@ -74,7 +74,7 @@ dw_publish_chart(chart_ID)
 #COVID
 #TOP
 chart_metadata <- dw_retrieve_chart_metadata("zpWBd")
-intro_text_fr <- chart_metadata$content$metadata$describe$intro
+intro_text_fr <- gsub("[.].*","",chart_metadata$content$metadata$describe$intro)
 
 chart_ID <- "H8K9m"
 
