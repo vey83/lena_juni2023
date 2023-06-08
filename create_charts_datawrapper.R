@@ -202,11 +202,11 @@ for (v in 1:nrow(vorlage_titel)) {
   l <- 1
   }
   if (vorlage_titel$langKey[v] == "fr") {
-  titel <- paste0(kantone_list$geoLevelname[k],": Votations cantonales du ",day(date_voting),". ",monate_de[month(date_voting)]," ",year(date_voting))
+  titel <- paste0(kantone_list$geoLevelname[k],": Votations cantonales du ",day(date_voting)," ",monate_fr[month(date_voting)]," ",year(date_voting))
   l <- 2
   }
   if (vorlage_titel$langKey[v] == "it") {
-  titel <- paste0(kantone_list$geoLevelname[k],": Voti cantonali da ",day(date_voting),". ",monate_de[month(date_voting)]," ",year(date_voting))
+  titel <- paste0(kantone_list$geoLevelname[k],": Voti cantonali del ",day(date_voting)," ",monate_it[month(date_voting)]," ",year(date_voting))
   l <- 3
   }
 
