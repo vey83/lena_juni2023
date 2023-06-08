@@ -52,7 +52,7 @@ dw_data_to_chart(climat_top_de,chart_ID)
 
 dw_edit_chart(chart_ID,
               intro = intro_text_de,
-              title = "Die Gemeinden mit der grössten Zustimmung zum CO2-Gesetz",
+              title = "Die Gemeinden mit der grössten höchsten Zustimmung zum CO2-Gesetz",
               source_name = "BFS",
               source_url = "https://raw.githubusercontent.com/awp-finanznachrichten/lena_juni2023/main/Output/Klima_Gesetz_all_data.csv")
 
@@ -65,7 +65,7 @@ dw_data_to_chart(climat_flop_de,chart_ID)
 
 dw_edit_chart(chart_ID,
               intro = intro_text_de,
-              title = "Die Gemeinden mit der grössten Ablehnung des CO2-Gesetzes",
+              title = "Die Gemeinden mit der grössten höchsten Ablehnung des CO2-Gesetzes",
               source_name = "BFS",
               source_url = "https://raw.githubusercontent.com/awp-finanznachrichten/lena_juni2023/main/Output/Klima_Gesetz_all_data.csv")
 
@@ -82,7 +82,7 @@ dw_data_to_chart(covid_top_de,chart_ID)
 
 dw_edit_chart(chart_ID,
               intro = intro_text_de,
-              title = "Die Gemeinden mit der grössten Zustimmung zum Covid-Gesetz",
+              title = "Die Gemeinden mit der grössten höchsten Zustimmung zum Covid-Gesetz",
               source_name = "BFS",
               source_url = "https://raw.githubusercontent.com/awp-finanznachrichten/lena_juni2023/main/Output/Covid_Gesetz_all_data.csv")
 
@@ -94,7 +94,7 @@ dw_data_to_chart(covid_flop_de,chart_ID)
 
 dw_edit_chart(chart_ID,
               intro = intro_text_de,
-              title = "Die Gemeinden mit der grössten Ablehnung des Covid-Gesetzes",
+              title = "Die Gemeinden mit der grössten höchsten Ablehnung des Covid-Gesetzes",
               source_name = "BFS",
               source_url = "https://raw.githubusercontent.com/awp-finanznachrichten/lena_juni2023/main/Output/Covid_Gesetz_all_data.csv")
 
