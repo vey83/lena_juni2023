@@ -1,6 +1,6 @@
 #Meta-Infos zu Vorlagen aus JSON rauslesen
 
-get_vorlagen <- function(dta_raw, sprache="de") {
+get_vorlagen <- function(dta_raw, sprache="de") {  #cette fonction produit un tibble avec les objets soumis au vote. col_1:langue, col_2:objet, col_3:numero_de_la_votation_du_jour, col_4:vot_id)
   
   vorlagen_data <- dta_raw$schweiz$vorlagen$vorlagenTitel
   cat(paste0("Es wurden folgende ",length(vorlagen_data)," Abstimmungsvorlagen gefunden:\n"))
@@ -25,7 +25,7 @@ get_vorlagen <- function(dta_raw, sprache="de") {
   
   cat(vorlagen$text,sep="\n")
   
-  return(vorlagen)
+  return(vorlagen) #retourne le data.frame décrit en haut
   
 }
 
